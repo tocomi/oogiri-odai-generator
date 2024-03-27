@@ -1,17 +1,12 @@
-import { useState } from 'react';
+import { Odai } from './odai/Odai';
+import { Providers } from './Providers';
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
+    <Providers>
       <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div>
-    </>
+      <Odai />
+    </Providers>
   );
 }
 
