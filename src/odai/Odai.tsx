@@ -17,8 +17,11 @@ export const Odai = () => {
         onChange={(e) => setKeyword(e.target.value)}
       />
       <button onClick={() => mutate()}>Search</button>
-      {isPending && <div>Loading...</div>}
-      <OdaiList odaiSuggestions={odaiSuggestions || []} />
+      {isPending ? (
+        <div>Loading...</div>
+      ) : (
+        <OdaiList odaiSuggestions={odaiSuggestions || []} />
+      )}
     </div>
   );
 };
