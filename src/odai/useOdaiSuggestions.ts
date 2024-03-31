@@ -7,7 +7,7 @@ export const useOdaiSuggestions = (keyword: string) => {
   return useMutation({
     mutationFn: async () => {
       const response = await fetch(
-        `https://oogiri-odai-api.onrender.com/?keyword=${keyword}`
+        `https://oogiri-odai-generator-api.tocomi0112.workers.dev/?keyword=${keyword}`
       );
       const data = await response.json();
       const result = v.parse(odaiSuggestionsSchema, data);
