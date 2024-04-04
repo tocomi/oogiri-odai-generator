@@ -1,5 +1,6 @@
 import { Odai } from './odai/Odai';
 import { Providers } from './Providers';
+import './index.css';
 
 function App() {
   return (
