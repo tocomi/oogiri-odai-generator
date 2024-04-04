@@ -5,8 +5,9 @@ import './index.css';
 function App() {
   return (
     <Providers>
-      <h1>Vite + React</h1>
-      <Odai />
+      <main className="flex justify-center">
+        <Odai />
+      </main>
     </Providers>
   );
 }
