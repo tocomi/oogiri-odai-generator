@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useOdaiSuggestions } from './useOdaiSuggestions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { toast } from 'sonner';
+import { useSetMessage } from '@/character/message';
 
 export const Odai = () => {
   const [keyword, setKeyword] = useState('花見 この世の終わり');
@@ -12,6 +12,12 @@ export const Odai = () => {
     isPending,
   } = useOdaiSuggestions(keyword);
 
+  const setMessage = useSetMessage();
+  const onClickGenerate = useCallback(() => {
+    setMessage('お題を考えているぜ... 気長に待ってくれよな');
+    mutate();
+  }, [mutate, setMessage]);
+
   return (
     <div className="flex flex-col gap-4 justify-center max-w-3xl w-[100%] p-8">
       <Input
@@ -19,7 +25,7 @@ export const Odai = () => {
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
       />
-      <Button variant="default" onClick={() => mutate()}>
+      <Button variant="default" onClick={onClickGenerate}>
         お題を考える！
       </Button>
       {isPending ? (
@@ -32,20 +38,15 @@ export const Odai = () => {
 };
 
 const OdaiList = ({ odaiSuggestions }: { odaiSuggestions: string[] }) => {
+  const setMessage = useSetMessage();
   const onClickCopy = (odai: string) => {
     navigator.clipboard
       .writeText(odai)
       .then(() => {
-        toast.success('クリップボードにコピーしました 💁‍♀️', {
-          duration: 2000,
-          position: 'top-right',
-        });
+        setMessage('クリップボードにコピーしたぜ');
       })
       .catch(() => {
-        toast.error('コピーに失敗しました 😢', {
-          duration: 2000,
-          position: 'top-right',
-        });
+        setMessage('エラーでコピーできなかったみたいだ、すまんな。');
       });
   };
 

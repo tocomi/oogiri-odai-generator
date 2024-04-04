@@ -1,14 +1,17 @@
-// TalkingMoai.tsx
 import { useState, useEffect, FC } from 'react';
+import { useMessage } from './message';
 
 interface Props {
   message: string;
 }
 
-export const Moai: FC<Props> = ({ message }) => {
+export const Moai: FC<Props> = () => {
   const [displayedMessage, setDisplayedMessage] = useState('');
+  const message = useMessage();
 
   useEffect(() => {
+    setDisplayedMessage('');
+
     let currentCharIndex = 0;
     const timer = setInterval(() => {
       setDisplayedMessage((prev) => prev + message.charAt(currentCharIndex));
@@ -16,7 +19,7 @@ export const Moai: FC<Props> = ({ message }) => {
       if (currentCharIndex > message.length) {
         clearInterval(timer);
       }
-    }, 100);
+    }, 50);
 
     return () => clearInterval(timer);
   }, [message]);
