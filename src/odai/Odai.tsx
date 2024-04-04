@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useOdaiSuggestions } from './useOdaiSuggestions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
 
 export const Odai = () => {
   const [keyword, setKeyword] = useState('花見 この世の終わり');
@@ -31,6 +32,23 @@ export const Odai = () => {
 };
 
 const OdaiList = ({ odaiSuggestions }: { odaiSuggestions: string[] }) => {
+  const onClickCopy = (odai: string) => {
+    navigator.clipboard
+      .writeText(odai)
+      .then(() => {
+        toast.success('クリップボードにコピーしました 💁‍♀️', {
+          duration: 2000,
+          position: 'top-right',
+        });
+      })
+      .catch(() => {
+        toast.error('コピーに失敗しました 😢', {
+          duration: 2000,
+          position: 'top-right',
+        });
+      });
+  };
+
   return (
     <div className="flex flex-col gap-2">
       {odaiSuggestions.map((odai) => (
@@ -41,7 +59,7 @@ const OdaiList = ({ odaiSuggestions }: { odaiSuggestions: string[] }) => {
           <div className="grid gap-1">
             <h3 className="font-semibold">{odai}</h3>
           </div>
-          <Button size="sm">
+          <Button onClick={() => onClickCopy(odai)} size="sm">
             <span>Copy</span>
           </Button>
         </div>
