@@ -6,7 +6,8 @@ import { Moai } from './character/Moai';
 function App() {
   return (
     <Providers>
-      <main className="flex justify-center pb-36">
+      <main className="flex flex-col items-center mt-8 pb-36">
+        <h1 className="text-4xl font-bold">大喜利お題ジェネレーター</h1>
         <Odai />
         <Moai />
       </main>

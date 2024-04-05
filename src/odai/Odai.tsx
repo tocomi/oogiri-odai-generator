@@ -28,7 +28,7 @@ export const Odai = () => {
         type="text"
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
-        placeholder="お題を絞り込むキーワード スペース区切りで複数可 例) 日本一 おにぎり"
+        placeholder="お題に利用するキーワード スペース区切りで複数可 例) 日本一 おにぎり"
       />
       <Button variant="default" onClick={onClickGenerate}>
         お題を作る！
