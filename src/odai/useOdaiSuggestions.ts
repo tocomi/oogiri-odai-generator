@@ -17,7 +17,7 @@ export const useOdaiSuggestions = (keyword: string) => {
       return result;
     },
     onSuccess: () => {
-      setMessage('お題を考えたぜ！');
+      setMessage('お題できたわ、おもしろくね？');
     },
     onError: () => {
       setMessage('エラーが発生したみたいだ、すまんな。');

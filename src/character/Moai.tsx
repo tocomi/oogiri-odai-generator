@@ -1,27 +1,25 @@
 import { useState, useEffect, FC } from 'react';
 import { useMessage } from './message';
 
-interface Props {
-  message: string;
-}
-
-export const Moai: FC<Props> = () => {
+export const Moai: FC = () => {
   const [displayedMessage, setDisplayedMessage] = useState('');
   const message = useMessage();
 
   useEffect(() => {
     setDisplayedMessage('');
+    const charItr = message[Symbol.iterator]();
+    let timerId: NodeJS.Timeout;
 
-    let currentCharIndex = 0;
-    const timer = setInterval(() => {
-      setDisplayedMessage((prev) => prev + message.charAt(currentCharIndex));
-      currentCharIndex++;
-      if (currentCharIndex > message.length) {
-        clearInterval(timer);
+    (function showChar() {
+      const nextChar = charItr.next();
+      if (nextChar.done) {
+        return;
       }
-    }, 50);
+      setDisplayedMessage((current) => current + nextChar.value);
+      timerId = setTimeout(showChar, 50);
+    })();
 
-    return () => clearInterval(timer);
+    return () => clearTimeout(timerId);
   }, [message]);
 
   return (

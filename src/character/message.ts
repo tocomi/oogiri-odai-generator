@@ -1,9 +1,11 @@
 import { atom, useAtomValue, useSetAtom } from 'jotai';
 
 const initialMessages = [
+  'おう',
   'うっす',
+  '...',
   'お前も暇だよなあ',
-  'いま機嫌悪いから話しかけないでくれ',
+  'いま機嫌悪いから話しかるんじゃねーぞ',
 ];
 
 const initialMessage =

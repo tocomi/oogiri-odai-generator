@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { useSetMessage } from '@/character/message';
 
 export const Odai = () => {
-  const [keyword, setKeyword] = useState('花見 この世の終わり');
+  const [keyword, setKeyword] = useState('');
   const {
     mutate,
     data: odaiSuggestions,
@@ -14,9 +14,13 @@ export const Odai = () => {
 
   const setMessage = useSetMessage();
   const onClickGenerate = useCallback(() => {
-    setMessage('お題を考えているぜ... 気長に待ってくれよな');
+    if (!keyword) {
+      setMessage('いや何か入れろよ');
+      return;
+    }
+    setMessage('お題考えてるから邪魔すんなよ');
     mutate();
-  }, [mutate, setMessage]);
+  }, [keyword, mutate, setMessage]);
 
   return (
     <div className="flex flex-col gap-4 justify-center max-w-3xl w-[100%] p-8">
@@ -24,9 +28,10 @@ export const Odai = () => {
         type="text"
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
+        placeholder="お題を絞り込むキーワード スペース区切りで複数可 例) 日本一 おにぎり"
       />
       <Button variant="default" onClick={onClickGenerate}>
-        お題を考える！
+        お題を作る！
       </Button>
       {isPending ? (
         <div>Loading...</div>
@@ -43,10 +48,10 @@ const OdaiList = ({ odaiSuggestions }: { odaiSuggestions: string[] }) => {
     navigator.clipboard
       .writeText(odai)
       .then(() => {
-        setMessage('クリップボードにコピーしたぜ');
+        setMessage('クリップボードにコピーしたわ');
       })
       .catch(() => {
-        setMessage('エラーでコピーできなかったみたいだ、すまんな。');
+        setMessage('エラーでコピーできなかったわ、すまんな。');
       });
   };
 
