@@ -1,9 +1,11 @@
 import { useState, useEffect, FC } from 'react';
 import { useMessage } from './message';
+import { useMutating } from '@/odai/useOdaiSuggestions';
 
 export const Moai: FC = () => {
   const [displayedMessage, setDisplayedMessage] = useState('');
   const message = useMessage();
+  const thinking = useMutating();
 
   useEffect(() => {
     setDisplayedMessage('');
@@ -27,7 +29,11 @@ export const Moai: FC = () => {
       <span className="inline-block bg-white border-cyan-900 shadow-lg border-2 rounded-2xl mr-[-48px] p-4 text-2xl font-bold h-36 w-96">
         {displayedMessage}
       </span>
-      <span className="text-9xl animate-sway">🗿</span>
+      <span
+        className={`text-9xl ${thinking ? 'animate-spin' : 'animate-sway'}`}
+      >
+        🗿
+      </span>
     </div>
   );
 };

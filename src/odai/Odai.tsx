@@ -30,14 +30,10 @@ export const Odai = () => {
         onChange={(e) => setKeyword(e.target.value)}
         placeholder="お題に利用するキーワード スペース区切りで複数可 例) 日本一 おにぎり"
       />
-      <Button variant="default" onClick={onClickGenerate}>
+      <Button variant="default" disabled={isPending} onClick={onClickGenerate}>
         お題を作る！
       </Button>
-      {isPending ? (
-        <div>Loading...</div>
-      ) : (
-        <OdaiList odaiSuggestions={odaiSuggestions || []} />
-      )}
+      {isPending ? null : <OdaiList odaiSuggestions={odaiSuggestions || []} />}
     </div>
   );
 };
