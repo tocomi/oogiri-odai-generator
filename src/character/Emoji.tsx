@@ -2,6 +2,7 @@ import { useState, useEffect, FC, useRef } from 'react';
 import { useMessage } from './message';
 import { useMutating } from '@/odai/useOdaiSuggestions';
 import 'emoji-picker-element';
+import * as v from 'valibot';
 
 export const Emoji: FC = () => {
   const [emoji, setEmoji] = useState('🗿');
@@ -29,7 +30,17 @@ export const Emoji: FC = () => {
 
   return (
     <div className="fixed flex flex-col gap-1 bottom-4 right-2">
-      {openEmojiPicker && <EmojiPicker onClickEmojiInPicker={setEmoji} />}
+      {openEmojiPicker && (
+        <div className="flex flex-row items-end gap-1">
+          <EmojiPicker onClickEmojiInPicker={setEmoji} />
+          <span
+            className="text-3xl cursor-pointer"
+            onClick={() => setOpenEmojiPicker(false)}
+          >
+            ✗
+          </span>
+        </div>
+      )}
       <div className="flex items-center text-9xl">
         <span className="inline-block bg-white border-cyan-900 shadow-lg border-2 rounded-2xl mr-[-48px] p-4 text-2xl font-bold h-36 w-96">
           {displayedMessage}
@@ -47,6 +58,12 @@ export const Emoji: FC = () => {
   );
 };
 
+const emojiPickerEventSchema = v.object({
+  detail: v.object({
+    unicode: v.string(),
+  }),
+});
+
 const EmojiPicker = ({
   onClickEmojiInPicker,
 }: {
@@ -57,8 +74,8 @@ const EmojiPicker = ({
     if (!ref.current) return;
 
     const listener = (event: Event) => {
-      console.log('Emoji clicked!', event);
-      onClickEmojiInPicker(event.detail.unicode);
+      const parsedEvent = v.parse(emojiPickerEventSchema, event);
+      onClickEmojiInPicker(parsedEvent.detail.unicode);
     };
     ref.current.addEventListener('emoji-click', listener);
     return () => {
