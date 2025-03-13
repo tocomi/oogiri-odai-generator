@@ -1,7 +1,7 @@
-import { Odai } from './odai/Odai';
-import { Providers } from './Providers';
-import './index.css';
-import { Emoji } from './character/Emoji';
+import { Odai } from './odai/Odai'
+import { Providers } from './Providers'
+import './index.css'
+import { Emoji } from './character/Emoji'
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         <Emoji />
       </main>
     </Providers>
-  );
+  )
 }
 
-export default App;
+export default App
